@@ -35,7 +35,7 @@ TabContainer.propTypes = {
 }
 
 class Header extends Component{
-    constructor(){
+    constructor(props){
         super();
         this.state = {
             modalIsOpen: false,
@@ -53,7 +53,8 @@ class Header extends Component{
             registerPasswordRequired: "dispNone",
             registerPassword: "",
             contactRequired: "dispNone",
-            contact: ""
+            contact: "",
+            hideSearchBar: props.hideSearchBar
         }
     }
 
@@ -74,7 +75,7 @@ class Header extends Component{
             registerPasswordRequired: "dispNone",
             registerPassword: "",
             contactRequired: "dispNone",
-            contact: ""
+            contact: "",
         });
     }
 
@@ -128,11 +129,12 @@ class Header extends Component{
     }
 
     render(){
+        const style = this.state.hideSearchBar ? {display: 'none'} : {display: 'inline-block'}
         return(
             <div>
-               <header className="app-header">
+               <header className="app-header" >
                <FastfoodIcon className="fastFoodIcon"/>
-               <div className="searchDiv">
+               <div className= "searchDiv" style={style}>
                 <Input id="input-with-icon-adornment" placeholder="Search by Restaurant Name"
                         startAdornment={
                             <InputAdornment position="start">

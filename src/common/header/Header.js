@@ -3,7 +3,7 @@ import './Header.css';
 import Button from '@material-ui/core/Button';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
-import { Icon, Typography, FormControl, InputLabel, Input, FormHelperText } from '@material-ui/core';
+import { Typography, FormControl, InputLabel, Input, FormHelperText } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { InputAdornment } from '@material-ui/core';
 import Modal from 'react-modal';
@@ -74,7 +74,8 @@ class Header extends Component{
             registerPasswordRequired: "dispNone",
             registerPassword: "",
             contactRequired: "dispNone",
-            contact: ""
+            contact: "",
+            searchRestaurant: ""
         });
     }
 
@@ -127,13 +128,18 @@ class Header extends Component{
         this.setState({ contact: e.target.value });
     }
 
+    restaurantSearchChanged = event =>{
+        this.setState({searchRestaurant: event.target.value});
+        console.log(this.state.searchRestaurant);
+    }
+
     render(){
         return(
             <div>
                <header className="app-header">
                <FastfoodIcon className="fastFoodIcon"/>
                <div className="searchDiv">
-                <Input id="input-with-icon-adornment" placeholder="Search by Restaurant Name"
+                <Input id="input-with-icon-adornment" placeholder="Search by Restaurant Name" onChange={this.restaurantSearchChanged}
                         startAdornment={
                             <InputAdornment position="start">
                                 <SearchIcon className="searchIcon"/>

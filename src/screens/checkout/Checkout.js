@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../../common/header/Header';
+import VerticalStepper from './VerticalStepper';
 
 class Checkout extends Component {
     render() {
@@ -8,17 +9,10 @@ class Checkout extends Component {
         return (
             <div>
                 <div>
-                    <Header hideSearchBar={1}/>
+                    <Header hideSearchBar={1} />
                 </div>
-                <button>Checkout Button</button>
-                <label htmlFor="Name"></label>
-                <input id="Name" type="text" placeholder="Type here" defaultValue={x+y}/>
-                <div>
-                    <span>Item 1</span>
-                    <span>Item2</span>
-                </div>
+                <VerticalStepper></VerticalStepper>
             </div>
-
         );
     }
 }

@@ -42,9 +42,17 @@ function getStepContent(step) {
 }
 
 class VerticalStepper extends React.Component {
-  state = {
-    activeStep: 0
-  };
+ constructor(props){
+     super();
+     this.state ={
+        customerAddress: props.customerAddress,
+        activeStep: 0
+     }
+ }
+
+//   state = {
+//     activeStep: 0
+//   };
 
   handleNext = () => {
     this.setState(state => ({
@@ -76,6 +84,9 @@ class VerticalStepper extends React.Component {
               <StepContent>
                 <Typography>{getStepContent(index)}</Typography>
                 <div className={classes.actionsContainer}>
+                    <div>
+                        <span>Delivery Address here {this.state.customerAddress} </span>
+                    </div>
                   <div>
                     <Button disabled={activeStep === 0} onClick={this.handleBack} className={classes.button}>
                       Back

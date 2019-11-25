@@ -1,17 +1,51 @@
 import React, { Component } from 'react';
 import Header from '../../common/header/Header';
 import VerticalStepper from './VerticalStepper';
+import { GridList } from '@material-ui/core';
 
 class Checkout extends Component {
+    constructor(){
+        super();
+        this.state = {
+            customerAddress: []
+        }
+    }
+    componentWillMount(){
+        let data = null;
+        let xhr = new XMLHttpRequest();
+        let that = this;
+        xhr.addEventListener("readystatechange", function () {
+            if(this.readyState === 4){
+                console.log(this.responseText);
+                that.setState({
+                    customerAddress: JSON.parse(this.responseText).addresses
+                });
+            }
+        })
+        xhr.open("GET", this.props.baseUrl + "address/customer")
+        xhr.setRequestHeader("Cache-Control", "no-cache");
+        xhr.setRequestHeader("authorization",  "123456");
+        xhr.setRequestHeader("Accept",  "application/json;charset=UTF-8");
+
+        xhr.send(data)
+    }
     render() {
-        let x = 200;
-        let y = 100;
+        
+        const items =this.state.customerAddress.map((item) => <li>{item}</li>);
         return (
             <div>
                 <div>
                     <Header hideSearchBar={1} />
                 </div>
-                <VerticalStepper></VerticalStepper>
+                    <VerticalStepper customerAddress></VerticalStepper>
+                <div>
+                        <GridList cols={3}>
+                            
+                        <span>{items.city}</span>
+                        
+                        </GridList>
+                        
+                </div>
             </div>
         );
     }

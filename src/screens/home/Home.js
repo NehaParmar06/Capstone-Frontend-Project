@@ -64,8 +64,8 @@ class Home extends Component {
         return (
             <div>
                 <Header hideSearchBar={0}/>
-
-                <Card className="cardClass">
+          
+          <Card className="cardClass">
                     <CardActionArea>
                         <CardMedia
                             className="cardMediaClass"

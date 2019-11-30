@@ -2,10 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import Home from './screens/home/Home';
-import Checkout from './screens/checkout/Checkout';
-import VerticalStepper from './screens/checkout/VerticalStepper';
 import Controller from './screens/Controller';
+import '../node_modules/font-awesome/css/font-awesome.min.css'; 
 
 ReactDOM.render(<Controller></Controller>, document.getElementById('root'));
 

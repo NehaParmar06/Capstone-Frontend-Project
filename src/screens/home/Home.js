@@ -32,6 +32,10 @@ class Home extends Component {
           });
       }
 
+      handleError(error) {
+        console.log(error.message);
+    }
+
     getAllRestaurants(){
         this.retrieveRestaurantDetails().then(restaurantList => {
             console.log(restaurantList);

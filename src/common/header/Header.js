@@ -56,6 +56,7 @@ class Header extends Component {
             contact: "",
             hideSearchBar: props.hideSearchBar,
             registrationSuccess: false,
+            loggedIn: sessionStorage.getItem("access-token") == null ? false : true
         }
 
         this.baseUrl = "http://localhost:8080/api";
@@ -94,6 +95,50 @@ class Header extends Component {
     loginClickHandler = () => {
         this.state.username === "" ? this.setState({ usernameRequired: "dispBlock" }) : this.setState({ usernameRequired: "dispNone" });
         this.state.password === "" ? this.setState({ passwordRequired: "dispBlock" }) : this.setState({ passwordRequired: "dispNone" });
+
+        let dataLogin = null;
+        let xhrLogin = new XMLHttpRequest();
+        let that = this;
+        xhrLogin.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                console.log(xhrLogin.getResponseHeader("access-token"));
+                sessionStorage.setItem("uuid", JSON.parse(this.responseText).id);
+                sessionStorage.setItem("access-token", xhrLogin.getResponseHeader("access-token"));
+
+                that.setState({
+                    loggedIn: true
+                });
+
+                that.closeModalHandler();
+            }
+        });
+
+        xhrLogin.open("POST", this.baseUrl + "/customer/login");
+        xhrLogin.setRequestHeader("Authorization", "Basic " + window.btoa(this.state.username + ":" + this.state.password));
+        xhrLogin.setRequestHeader("Content-Type", "application/json");
+        xhrLogin.setRequestHeader("Cache-Control", "no-cache");
+        xhrLogin.send(dataLogin);
+
+        // fetch(this.baseUrl + "/customer/login", {  
+        //     method: 'post',  
+        //     headers: {
+        //         'Authorization': 'Basic ' + window.btoa(this.state.username + ":" + this.state.password),
+        //         'Accept': 'application/json',  
+        //         'Content-Type': 'application/json',
+        //         'Cache-Control': 'no-cache' 
+        //     } 
+        // }).then((Response) => Response.json())  
+        //     .then((result) => {  
+        //         console.log(result);  
+        //         if (result.message == 'SIGNED IN SUCCESSFULLY'){
+        //             sessionStorage.setItem("access-token", result.getResponseHeader("access-token"));
+        //             alert('Valid User');  
+        //         }  
+        //         else  
+        //             alert(result.message); 
+        //     }).catch(error => {
+        //         this.handleError(error);
+        //       }); 
     }
 
     inputUsernameChangeHandler = (e) => {
@@ -131,7 +176,13 @@ class Header extends Component {
                 //this.props.history.push("/Dashboard");  
                 else
                     alert(Result.message);
-            })
+            }).catch(error => {
+                this.handleError(error);
+            });
+    }
+
+    handleError(error) {
+        console.log(error.message);
     }
 
     inputFirstNameChangeHandler = (e) => {
@@ -159,6 +210,14 @@ class Header extends Component {
         console.log(this.state.searchRestaurant);
     }
 
+    logoutHandler = (e) => {
+        sessionStorage.removeItem("uuid");
+        sessionStorage.removeItem("access-token");
+        this.setState({
+            loggedIn: false
+        });
+    }
+
     render() {
         const style = this.state.hideSearchBar ? { display: 'none' } : { display: 'inline-block' }
         return (
@@ -174,12 +233,24 @@ class Header extends Component {
                                 </InputAdornment>
                             } />
                     </div>
-                    <div className="login-button">
-                        <Button variant="contained" color="default" onClick={this.openModalHandler}>
-                            <AccountCircleIcon />
-                            Login
-                        </Button>
-                    </div>
+
+
+
+                    {!this.state.loggedIn ?
+                        <div className="login-button">
+                            <Button variant="contained" color="default" onClick={this.openModalHandler}>
+                                <AccountCircleIcon />
+                                Login
+                       </Button>
+                        </div>
+                        :
+                        <div className="login-button">
+                            <Button variant="contained" color="default" onClick={this.logoutHandler}>
+                                Logout
+                            </Button>
+                        </div>
+                    }
+
                 </header>
 
                 <Modal ariaHideApp={false} isOpen={this.state.modalIsOpen} contentLabel="Login" onRequestClose={this.closeModalHandler} style={customModalStyles}>
@@ -203,6 +274,14 @@ class Header extends Component {
                                     <span className="red">required</span>
                                 </FormHelperText>
                             </FormControl>
+                            <br /><br />
+                            {this.state.loggedIn === true &&
+                                <FormControl>
+                                    <span className="successText">
+                                        Login Successful!
+                                    </span>
+                                </FormControl>
+                            }
                             <br /><br />
                             <Button variant="contained" color="primary" onClick={this.loginClickHandler}>LOGIN</Button>
                         </TabContainer>}

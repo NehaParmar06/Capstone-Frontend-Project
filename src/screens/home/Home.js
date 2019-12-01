@@ -44,7 +44,7 @@ class Home extends Component {
     //function to render restaurant cards
     renderCard() {
        return this.state.restaurantList.map(restaurant => (
-                <Card className="cardClass">
+                <Card key={restaurant.id} className="cardClass">
                     <CardActionArea>
                         <CardMedia
                             className="cardMediaClass"
@@ -60,7 +60,7 @@ class Home extends Component {
                             </Typography>
                         </CardContent>
                         <div>
-                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i className="fa fa-star" aria-hidden="true"></i>
                             <span>{restaurant.customer_rating}</span>
                         </div>
                         <div>

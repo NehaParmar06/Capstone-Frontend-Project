@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './Header.css';
 import Button from '@material-ui/core/Button';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -22,9 +22,9 @@ const customModalStyles = {
     }
 };
 
-const TabContainer = function(props){
-    return(
-        <Typography component="div" style={{padding: 0, textAlign: 'center'}}>
+const TabContainer = function (props) {
+    return (
+        <Typography component="div" style={{ padding: 0, textAlign: 'center' }}>
             {props.children}
         </Typography>
     );
@@ -34,8 +34,8 @@ TabContainer.propTypes = {
     children: PropTypes.node.isRequired
 }
 
-class Header extends Component{
-    constructor(props){
+class Header extends Component {
+    constructor(props) {
         super();
         this.state = {
             modalIsOpen: false,
@@ -54,8 +54,11 @@ class Header extends Component{
             registerPassword: "",
             contactRequired: "dispNone",
             contact: "",
-            hideSearchBar: props.hideSearchBar
+            hideSearchBar: props.hideSearchBar,
+            registrationSuccess: false,
         }
+
+        this.baseUrl = "http://localhost:8080/api";
     }
 
     openModalHandler = () => {
@@ -81,11 +84,11 @@ class Header extends Component{
     }
 
     closeModalHandler = () => {
-        this.setState({modalIsOpen: false});
+        this.setState({ modalIsOpen: false });
     }
 
     tabChangeHandler = (event, value) => {
-        this.setState({value});
+        this.setState({ value });
     }
 
     loginClickHandler = () => {
@@ -107,6 +110,28 @@ class Header extends Component{
         this.state.email === "" ? this.setState({ emailRequired: "dispBlock" }) : this.setState({ emailRequired: "dispNone" });
         this.state.registerPassword === "" ? this.setState({ registerPasswordRequired: "dispBlock" }) : this.setState({ registerPasswordRequired: "dispNone" });
         this.state.contact === "" ? this.setState({ contactRequired: "dispBlock" }) : this.setState({ contactRequired: "dispNone" });
+
+        fetch((this.baseUrl + "/customer/signup"), {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "email_address": this.state.email,
+                "first_name": this.state.firstname,
+                "last_name": this.state.lastname,
+                "mobile_number": this.state.contact,
+                "password": this.state.registerPassword
+            })
+        }).then((Response) => Response.json())
+            .then((Result) => {
+                if (Result.status === 'CUSTOMER SUCCESSFULLY REGISTERED')
+                    alert('Registered successfully')
+                //this.props.history.push("/Dashboard");  
+                else
+                    alert(Result.message);
+            })
     }
 
     inputFirstNameChangeHandler = (e) => {
@@ -129,26 +154,26 @@ class Header extends Component{
         this.setState({ contact: e.target.value });
     }
 
-    restaurantSearchChanged = event =>{
-        this.setState({searchRestaurant: event.target.value});
+    restaurantSearchChanged = event => {
+        this.setState({ searchRestaurant: event.target.value });
         console.log(this.state.searchRestaurant);
     }
 
-    render(){
-        const style = this.state.hideSearchBar ? {display: 'none'} : {display: 'inline-block'}
-        return(
+    render() {
+        const style = this.state.hideSearchBar ? { display: 'none' } : { display: 'inline-block' }
+        return (
             <div>
-               <header className="app-header" >
-               <FastfoodIcon className="fastFoodIcon"/>
-          
-          <div className= "searchDiv" style={style}>
-                <Input id="input-with-icon-adornment" placeholder="Search by Restaurant Name" onChange={this.restaurantSearchChanged}
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <SearchIcon className="searchIcon"/>
-                            </InputAdornment>
-                    }/>
-               </div>
+                <header className="app-header" >
+                    <FastfoodIcon className="fastFoodIcon" />
+
+                    <div className="searchDiv" style={style}>
+                        <Input id="input-with-icon-adornment" placeholder="Search by Restaurant Name" onChange={this.restaurantSearchChanged}
+                            startAdornment={
+                                <InputAdornment position="start">
+                                    <SearchIcon className="searchIcon" />
+                                </InputAdornment>
+                            } />
+                    </div>
                     <div className="login-button">
                         <Button variant="contained" color="default" onClick={this.openModalHandler}>
                             <AccountCircleIcon />
@@ -158,29 +183,29 @@ class Header extends Component{
                 </header>
 
                 <Modal ariaHideApp={false} isOpen={this.state.modalIsOpen} contentLabel="Login" onRequestClose={this.closeModalHandler} style={customModalStyles}>
-                    <Tabs className="tabs"  value={this.state.value} onChange={this.tabChangeHandler}>
+                    <Tabs className="tabs" value={this.state.value} onChange={this.tabChangeHandler}>
                         <Tab label="Login"></Tab>
                         <Tab label="Register"></Tab>
                     </Tabs>
                     {this.state.value === 0 &&
-                    <TabContainer>
-                        <FormControl required>
-                            <InputLabel htmlFor="username">Username</InputLabel>
-                            <Input id="username" type="text" username={this.state.username} onChange={this.inputUsernameChangeHandler} />
+                        <TabContainer>
+                            <FormControl required>
+                                <InputLabel htmlFor="username">Username</InputLabel>
+                                <Input id="username" type="text" username={this.state.username} onChange={this.inputUsernameChangeHandler} />
                                 <FormHelperText className={this.state.usernameRequired}>
                                     <span className="red">required</span>
                                 </FormHelperText>
-                        </FormControl><br></br>
-                        <FormControl required>
-                            <InputLabel htmlFor="loginPassword">Password</InputLabel>
+                            </FormControl><br></br>
+                            <FormControl required>
+                                <InputLabel htmlFor="loginPassword">Password</InputLabel>
                                 <Input id="loginPassword" type="password" loginpassword={this.state.loginPassword} onChange={this.inputLoginPasswordChangeHandler} />
                                 <FormHelperText className={this.state.loginPasswordRequired}>
-                                <span className="red">required</span>
+                                    <span className="red">required</span>
                                 </FormHelperText>
-                        </FormControl>
-                        <br /><br />
-                        <Button variant="contained" color="primary" onClick={this.loginClickHandler}>LOGIN</Button>
-                    </TabContainer>}
+                            </FormControl>
+                            <br /><br />
+                            <Button variant="contained" color="primary" onClick={this.loginClickHandler}>LOGIN</Button>
+                        </TabContainer>}
 
                     {this.state.value === 1 &&
                         <TabContainer>
@@ -224,13 +249,21 @@ class Header extends Component{
                                 </FormHelperText>
                             </FormControl>
                             <br /><br />
+                            {this.state.registrationSuccess === true &&
+                                <FormControl>
+                                    <span className="successText">
+                                        Registration Successful. Please Login!
+                                      </span>
+                                </FormControl>
+                            }
+                            <br /><br />
                             <Button variant="contained" color="primary" onClick={this.registerClickHandler}>REGISTER</Button>
                         </TabContainer>
                     }
 
                 </Modal>
-            </div> 
-        )    
+            </div>
+        )
     }
 }
 

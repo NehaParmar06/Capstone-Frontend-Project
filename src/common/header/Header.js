@@ -234,15 +234,15 @@ class Header extends Component {
                             } />
                     </div>
                     {!this.state.loggedIn ?
-                        <div className="login-button">
-                            <Button variant="contained" color="default" onClick={this.openModalHandler}>
+                        <div>
+                            <Button className="login-button" variant="contained" color="default" onClick={this.openModalHandler}>
                                 <AccountCircleIcon />
                                 Login
                        </Button>
                         </div>
                         :
-                        <div className="login-button">
-                            <Button variant="contained" color="default" onClick={this.logoutHandler}>
+                        <div>
+                            <Button className="login-button" variant="contained" color="default" onClick={this.logoutHandler}>
                                 Logout
                             </Button>
                         </div>

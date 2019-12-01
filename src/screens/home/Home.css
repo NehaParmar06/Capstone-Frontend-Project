@@ -1,6 +1,39 @@
 .cardClass{
     max-width: 345px;
+    margin-bottom: 20px;
+    max-height: 310px;
 }
 .cardMediaClass{
     height: 140px;
+}
+.cardOuterDiv{
+    padding: 20px;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
+.ratingPriceDiv{
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+}
+.customerRatingDiv{
+    background: #ffcc00;
+    color: white;
+    border-radius: 5%;
+    padding: 10px;
+    text-align: center;
+}
+.avgPriceDiv{
+    padding: 10px;
+    text-align: center;
+}
+@media only screen and (max-width: 1024px){
+    .cardOuterDiv{
+        grid-template-columns: auto auto;
+    }
+}
+@media only screen and (max-width: 420px){
+    .cardOuterDiv{
+        grid-template-columns: auto;
+    }
 }

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './Home.css';
 import Header from '../../common/header/Header';
-import { makeStyles, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography, Button } from '@material-ui/core';
+import { makeStyles, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography, Button, Link } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
 
 class Home extends Component {
 
@@ -48,7 +49,11 @@ class Home extends Component {
     //function to render restaurant cards
     renderCard() {
        return this.state.restaurantList.map(restaurant => (
-                <Card key={restaurant.id} className="cardClass">
+        <Link key={restaurant.id} underline='none' component={RouterLink} to={{
+            pathname: "/details",
+            param1: restaurant.id
+          }}>
+                <Card className="cardClass">
                     <CardActionArea>
                         <CardMedia
                             className="cardMediaClass"
@@ -74,6 +79,7 @@ class Home extends Component {
                         </div>
                     </CardActionArea>
                 </Card>
+            </Link>
             ));
     }
 

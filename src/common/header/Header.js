@@ -233,9 +233,6 @@ class Header extends Component {
                                 </InputAdornment>
                             } />
                     </div>
-
-
-
                     {!this.state.loggedIn ?
                         <div className="login-button">
                             <Button variant="contained" color="default" onClick={this.openModalHandler}>
@@ -250,7 +247,6 @@ class Header extends Component {
                             </Button>
                         </div>
                     }
-
                 </header>
 
                 <Modal ariaHideApp={false} isOpen={this.state.modalIsOpen} contentLabel="Login" onRequestClose={this.closeModalHandler} style={customModalStyles}>
@@ -339,7 +335,6 @@ class Header extends Component {
                             <Button variant="contained" color="primary" onClick={this.registerClickHandler}>REGISTER</Button>
                         </TabContainer>
                     }
-
                 </Modal>
             </div>
         )

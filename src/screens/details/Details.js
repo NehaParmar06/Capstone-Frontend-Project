@@ -5,8 +5,8 @@ import './Details.css';
 import Img from 'react-image'
 
 class Details extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             restaurant: {
                 id: "",
@@ -29,6 +29,8 @@ class Details extends Component {
                 categories: []
               }
         }
+
+        this.restaurantId = this.props.location.param1;
     }
 
     componentWillMount() {
@@ -41,7 +43,7 @@ class Details extends Component {
             }
         });
 
-        xhrRestaurant.open("GET", this.props.baseUrl + "restaurant/"+ this.props.match.params.id);
+        xhrRestaurant.open("GET", this.props.baseUrl + "restaurant/"+ this.restaurantId);
         xhrRestaurant.setRequestHeader("Cache-Control", "no-cache");
         xhrRestaurant.send(restaurantData);
     }

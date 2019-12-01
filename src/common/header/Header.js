@@ -167,7 +167,7 @@ class Header extends Component {
                     <FastfoodIcon className="fastFoodIcon" />
 
                     <div className="searchDiv" style={style}>
-                        <Input id="input-with-icon-adornment" placeholder="Search by Restaurant Name" onChange={this.restaurantSearchChanged}
+                        <Input className="searchInput" id="input-with-icon-adornment" placeholder="Search by Restaurant Name" onChange={this.restaurantSearchChanged}
                             startAdornment={
                                 <InputAdornment position="start">
                                     <SearchIcon className="searchIcon" />

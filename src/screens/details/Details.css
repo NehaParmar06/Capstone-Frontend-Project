@@ -57,6 +57,8 @@ img{
 
 .leftMenu{
   width: 50%;
+  padding-right:5%;
+  padding-left: 5%;
 }
 .rightCheckout {
   width: 50%;
@@ -90,7 +92,33 @@ img{
 .chekoutButton{
   padding: 2%;
 }
-
+.listItemHead{
+  text-transform: uppercase;
+  color: gray;
+  font-weight: bolder;
+}
+.fa-circle-g {
+  color: green;
+}
+.fa-circle-r{
+  color: red;
+}
+.fa-plus{
+  color: gray;
+  padding-left: 2%;
+}
+.fa-inr{
+  padding-right: 2%;
+}
+.itemPrice{
+  padding-right: 3%;
+}
+.menu-item-name{
+  padding-left: 2%;
+}
+.menu-item-name::first-letter{
+  text-transform: uppercase
+}
 @media (max-width: 992px) {
   .leftDetails {
     width: inherit;
@@ -120,11 +148,14 @@ img{
   .rating-cost{
     justify-content: center;
   }
+  .flex-container-menu {
+    flex-direction: column;
+  }
   .leftMenu{
     width: inherit;
   }
   .rightCheckout {
-    width: 100%;
+    width: inherit;
     padding-right:5%;
     padding-left: 5%;
   }

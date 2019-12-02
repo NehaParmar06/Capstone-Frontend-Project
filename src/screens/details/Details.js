@@ -6,13 +6,16 @@ import CardContent from '@material-ui/core/CardContent';
 import Box from '@material-ui/core/Box';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Badge from '@material-ui/core/Badge';
-
 import './Details.css';
 import { Button } from '@material-ui/core';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 
 class Details extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             restaurant: {
                 id: "",
@@ -35,6 +38,17 @@ class Details extends Component {
                 categories: []
               }
         }
+        this.restaurantId = this.props.location.param1;
+    }
+
+    getMenuItemColor(value){
+        let classStyle = "badge m2";
+        if(value==='VEG'){
+            classStyle= 'fa fa-circle fa-circle-g';
+        }else{
+            classStyle= 'fa fa-circle fa-circle-r';
+        }
+        return classStyle;
     }
 
     componentWillMount() {
@@ -47,7 +61,7 @@ class Details extends Component {
             }
         });
 
-        xhrRestaurant.open("GET", this.props.baseUrl + "restaurant/"+ this.props.match.params.id);
+        xhrRestaurant.open("GET", this.props.baseUrl + "restaurant/"+ this.restaurantId);
         xhrRestaurant.setRequestHeader("Cache-Control", "no-cache");
         xhrRestaurant.send(restaurantData);
     }
@@ -60,7 +74,7 @@ class Details extends Component {
                 <div className="details">
                     <div className="flex-containerDetails">
                     <div className="leftDetails">
-                        <img src={restaurant.photo_URL}></img>
+                        <img src={restaurant.photo_URL} alt=""/>
                     </div>
 
                     <div className="rightDetails">
@@ -91,6 +105,28 @@ class Details extends Component {
 
                     <div className="flex-container-menu">
                         <div className="leftMenu">
+                            {restaurant.categories.map(category => (
+                                <List key={category.id}>
+                                    <ListItem>
+                                        <ListItemText primary={<Typography variant="subtitle1" className="listItemHead" >{category.category_name}</Typography>}></ListItemText>
+                                    </ListItem>
+                                    <Divider></Divider>
+                                    <List component="div" disablePadding>
+                                        {category.item_list.map(item => (
+                                            <ListItem key={item.id}>
+                                                {/* <div> */}
+                                                    <i className={this.getMenuItemColor(item.item_type)} aria-hidden="true">
+                                                    </i>
+                                                    <ListItemText className="menu-item-name">{item.item_name}</ListItemText>
+                                                    <i className="fa fa-inr" aria-hidden="true"></i> 
+                                                        <span className="itemPrice">{item.price}</span>
+                                                    <i className="fa fa-plus" aria-hidden="true"></i>
+                                                 {/* </div> */}
+                                            </ListItem>
+                                        ))}
+                                     </List>
+                                </List>
+                            ))}
                         </div>
                         <div className="rightCheckout">
                             <Card>

@@ -154,7 +154,7 @@ class Details extends Component {
                                         </div>
                                     </div>
                                     <div className="chekoutButton">
-                                        <Button variant="contained" color="primary" fullWidth>
+                                        <Button variant="contained" color="primary" component={RouterLink} to="/checkout" fullWidth>
                                             Checkout
                                         </Button>
                                     </div>

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './Delivery.css';
-import { FormLabel, GridList, GridListTile, FormControl, RadioGroup, Radio, FormControlLabel } from '@material-ui/core';
+import { FormLabel, GridList, GridListTile, FormControl, RadioGroup, Radio, FormControlLabel} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
     sformControl: {
         margin: theme.spacing(3),
-    }
+      }
 });
 
 class Payment extends Component {
@@ -23,12 +23,12 @@ class Payment extends Component {
             { selected: event.target.value }
         )
         localStorage.setItem('paymentMode', "selected");
-    };
+      };
 
     render() {
         console.log(this.props.paymentList);
         const { classes } = this.props;
-
+        
         return (
             <div>
                 {/* <FormLabel component="legend">Select Mode of Payment</FormLabel>
@@ -44,13 +44,13 @@ class Payment extends Component {
                 ))} */}
 
                 <FormLabel component="legend">Select Mode of Payment</FormLabel>
-                {this.props.paymentList.map((payment, key) => (
+                {this.props.paymentList.map((payment , key )=> (
                     <ul item={payment} key={payment.id} >
                         <FormControl component="fieldset" className={classes.formControl}>
                             <RadioGroup value={this.state.selected} onChange={this.handleChangeHandler}>
                                 <FormControlLabel value={payment.payment_name} control={<Radio />} label={payment.payment_name} />
-                            </RadioGroup>
-                        </FormControl>
+                            </RadioGroup>   
+                        </FormControl> 
                     </ul>
                 ))}
             </div>

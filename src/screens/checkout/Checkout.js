@@ -7,8 +7,10 @@ import './Checkout.css';
 import CloseIcon from '@material-ui/icons/Close'
 
 const styles = theme => ({
-    rcard: {
+    card: {
+        marginTop: 40,
         minWidth: 275,
+        marginRight: 40
     },
     bullet: {
         display: 'inline-block',
@@ -37,13 +39,34 @@ const styles = theme => ({
 // const [open, setOpen] = React.useState(false);
 
 class Checkout extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             customerAddress: [{}],
             stateList: [{}],
             paymentList: [{}],
-            setOpen: ""
+            setOpen: "",
+            restaurantId: props.param1,
+            restaurant: {
+                id: "",
+                restaurant_name: "",
+                photo_URL: "",
+                customer_rating: "",
+                average_price: "",
+                number_customers_rated: "",
+                address: {
+                  id: "",
+                  flat_building_name: "",
+                  locality: "",
+                  city: "",
+                  pincode: "",
+                  state: {
+                    id: "",
+                    state_name: ""
+                  }
+                },
+                categories: []
+              }
         }
     }
 
@@ -83,6 +106,25 @@ class Checkout extends Component {
         xhr.send(data);
     }
 
+    getRestaurantDetails(){
+        let data = null;
+        let xhr = new XMLHttpRequest();
+        let that = this;
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                that.setState({restaurant: JSON.parse(this.responseText)});
+            }
+        })
+        xhr.open("GET", this.props.baseUrl + "/restaurant/"+ this.restaurantId);
+        xhr.setRequestHeader("Cache-Control", "no-cache");
+        xhr.setRequestHeader("Accept", "application/json;charset=UTF-8");
+        xhr.send(data);
+    }
+
+    getRestaurantItems(){
+
+    }
+
     componentWillMount() {
         let data = null;
         let xhr = new XMLHttpRequest();
@@ -106,7 +148,7 @@ class Checkout extends Component {
         xhr.open("GET", this.props.baseUrl + "/address/customer");
         xhr.setRequestHeader("Cache-Control", "no-cache");
         //var access = sessionStorage.getItem('access-token');
-        xhr.setRequestHeader("authorization", "Bearer eyJraWQiOiIxYjE4N2I5Ny1lNzI2LTQ4YTItYTcwZC1iNjA4Mzg1ZTFhMjgiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiI2Y2U0NTNiOS00ZGZiLTRkOGQtYTM0YS0xYTQ0MWIyYTliNGIiLCJpc3MiOiJodHRwczovL0Zvb2RPcmRlcmluZ0FwcC5pbyIsImV4cCI6MTU3NTI1OCwiaWF0IjoxNTc1MjI5fQ.IaghL2t070jW_YH4zL0zOr17VRA_wy70Lh4ssrlY8P8M1P7K9UOAcIIZ-VQOk3LPwnaXsfpbi5giUhnx2PE6pQ");
+        xhr.setRequestHeader("authorization", "Bearer eyJraWQiOiI4Nzg2NTI1MS1kYTFmLTQyZTgtYjc3Mi1kMzU2Y2RlMzMyNTgiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiI2Y2U0NTNiOS00ZGZiLTRkOGQtYTM0YS0xYTQ0MWIyYTliNGIiLCJpc3MiOiJodHRwczovL0Zvb2RPcmRlcmluZ0FwcC5pbyIsImV4cCI6MTU3NTMzMiwiaWF0IjoxNTc1MzA0fQ.eytlFo3Iv28AGK5lA08GICJIEbOlLqD7uw7Gj7FZIqEbeAdh_2dNdGOGL_3rRuyi9RyAuRruTzTqZqG-p2ly4w");
         // console.log(access);
         // if(access === null){
         //     xhr.setRequestHeader("authorization", "Bearer eyJraWQiOiJhODQwYzk3OC0yYjlkLTRlY2ItODViOC1lZGNjMTEwMDBmMDMiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiI2Y2U0NTNiOS00ZGZiLTRkOGQtYTM0YS0xYTQ0MWIyYTliNGIiLCJpc3MiOiJodHRwczovL0Zvb2RPcmRlcmluZ0FwcC5pbyIsImV4cCI6MTU3NTIwOCwiaWF0IjoxNTc1MTc5fQ.CPtESnqVJWJj-lfmmfPLrUQH0L9fYzVjY--KMJSihQtyeFclJ0IDWVWUZzUdfo_tui-0OcsyWrX4qKKmRBGOsg");
@@ -157,14 +199,27 @@ class Checkout extends Component {
                         <Card className={classes.card}>
                             <CardContent>
                                 <FormControl className={classes.FormControl}>
-                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                    <Typography className={classes.title} color="textPrimary" gutterBottom>
                                         Summary
                                     </Typography>
+                                    {this.state.restaurant.restaurant_name}
                                 </FormControl>
+
+                                {/* {this.props.paymentList.map((payment , key )=> (
+                                    <ul item={payment} key={payment.id} >
+                                        <FormControl component="fieldset" className={classes.formControl}>
+                                            <RadioGroup value={this.state.selected} onChange={this.handleChangeHandler}>
+                                                <FormControlLabel value={payment.payment_name} control={<Radio />} label={payment.payment_name} />
+                                            </RadioGroup>   
+                                        </FormControl> 
+                                    </ul>
+                                ))} */}
+
+                                
                                 <Divider />
                             </CardContent>
                             <CardActions>
-                                <Button size="small">Learn More</Button>
+                                <Button variant="contained" color="primary"> PLACE ORDER</Button>
                             </CardActions>
                         </Card>
                         {/* TODO : Snack Bar Implementation */}

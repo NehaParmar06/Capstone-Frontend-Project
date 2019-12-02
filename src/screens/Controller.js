@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 class Controller extends Component {
     constructor() {
         super();
-        this.baseUrl = "http://localhost:8080/api/";
+        this.baseUrl = "http://localhost:8080/api";
     }
     render() {
         return (

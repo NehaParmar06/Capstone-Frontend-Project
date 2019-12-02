@@ -2,6 +2,8 @@
     background-color:darkslategray;
     height: 36px;
     padding: 8px 32px 8px 16px;
+    display: grid;
+    grid-template-columns: auto auto auto;
 }
 
 .login-button {
@@ -14,7 +16,6 @@
 
 .searchDiv{
     /* display: inline-block; */
-    width: 30%;
 }
 
 .MuiInput-underline:before {
@@ -25,7 +26,7 @@
     border-bottom: 1px solid white;
 }
 
-.MuiInputBase-input {
+.searchInput {
     color: white !important;
 }
 .MuiInput-root {
@@ -35,7 +36,7 @@
     margin-bottom: 20px;
 } 
 
-dispNone {
+.dispNone {
     display: none;
 }
 
@@ -45,4 +46,13 @@ dispNone {
 
 .red {
     color: red;
+}
+@media only screen and (max-width: 420px){
+    .app-header {
+        height: 110px;
+        grid-template-columns: auto;
+    }
+    .login-button {
+        float: left;
+    } 
 }

@@ -12,6 +12,7 @@ class Controller extends Component {
     render() {
         return (
             <div>
+                {/* TODO  Add a check if session storage - access token is not set redirect to home page*/}
                 <Router>
                     <Route exact path="/" render={(props) => <Home {...props} baseUrl={this.baseUrl} />} />
                     <Route exact path="/checkout" render={(props) => <Checkout {...props} baseUrl={this.baseUrl} />} />

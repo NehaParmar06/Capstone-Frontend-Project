@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import './Home.css';
 import Header from '../../common/header/Header';
-import { makeStyles, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography, Button } from '@material-ui/core';
+import { makeStyles, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography, Button, Link } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
 
 class Home extends Component {
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             restaurantList: []
         }
         this.baseUrl = "http://localhost:8080/api/";
         this.getAllRestaurants();
+        this.restaurantName = this.props;
     }
 
     //Service call to get the list of Restaurants
@@ -32,6 +34,10 @@ class Home extends Component {
           });
       }
 
+      handleError(error) {
+        console.log(error.message);
+    }
+
     getAllRestaurants(){
         this.retrieveRestaurantDetails().then(restaurantList => {
             console.log(restaurantList);
@@ -39,11 +45,28 @@ class Home extends Component {
                 restaurantList: restaurantList.restaurants
             });
         });
+
+        var res = this.state.restaurantList.filter(function(restaurant_name) {
+            return this.filterMatches(restaurant_name, /^L/); // for letter A, index 0
+        
+        });        
     }
+
+    filterMatches(words, regexp) {
+        return words.filter(function (word) {
+             return regexp.test(word);
+        });
+    }
+    
+    
 
     //function to render restaurant cards
     renderCard() {
        return this.state.restaurantList.map(restaurant => (
+        <Link key={restaurant.id} underline='none' component={RouterLink} to={{
+            pathname: "/details",
+            param1: restaurant.id
+          }}>
                 <Card className="cardClass">
                     <CardActionArea>
                         <CardMedia
@@ -59,17 +82,23 @@ class Home extends Component {
                                {restaurant.categories}
                             </Typography>
                         </CardContent>
-                        <div>
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            <span>{restaurant.customer_rating}</span>
-                        </div>
-                        <div>
-                            <i className="fa fa-inr" aria-hidden="true"></i>
-                            <span>{restaurant.average_price}</span>
-                            <span> for two</span>
+                        <div className="ratingPriceDiv">
+                            <div className="customerRatingDiv">
+                                <i className="fa fa-star" aria-hidden="true"></i>
+                                <span> {restaurant.customer_rating}</span>
+                                <span> (</span>
+                                <span>{restaurant.number_customers_rated}</span>
+                                <span>)</span>
+                            </div>
+                            <div className="avgPriceDiv">
+                                <i className="fa fa-inr" aria-hidden="true"></i>
+                                <span> {restaurant.average_price}</span>
+                                <span> for two</span>
+                            </div>
                         </div>
                     </CardActionArea>
                 </Card>
+            </Link>
             ));
     }
 
@@ -80,7 +109,10 @@ class Home extends Component {
         return (
             <div>
                 <Header hideSearchBar={0}/>
+                <div className="cardOuterDiv">
                 {this.renderCard()}
+                </div>
+               
             </div>
         )
     }

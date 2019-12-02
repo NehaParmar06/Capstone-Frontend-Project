@@ -1,5 +1,4 @@
 .details {
-  text-align: left;
   width: 100%;
 }
 
@@ -40,6 +39,13 @@ img{
 .avg-cost{
   width: 50%;
 }
+
+.rating-cost{
+  display: flex;
+  flex-direction: row;
+  height: max-content;
+}
+
 .avg-customer-rating-text{
   text-transform: uppercase;
   color: gray;
@@ -48,6 +54,43 @@ img{
   text-transform: uppercase;
   color: gray;
 }
+
+.leftMenu{
+  width: 50%;
+}
+.rightCheckout {
+  width: 50%;
+  padding-right:5%;
+  padding-left: 5%;
+}
+
+.flex-container-menu {
+  display: flex;
+  padding-top: 2%;
+}
+
+.chekoutHeader{
+  display: flex;
+  flex-direction: row;
+}
+.chekoutTotal{
+  text-transform: uppercase;
+  display: flex;
+  padding: 2%;
+}
+.amountText{
+  width: 50%;
+  font-weight: bold;
+}
+.amountInr{
+  width: 50%;
+  font-weight: bold;
+  text-align: right;
+}
+.chekoutButton{
+  padding: 2%;
+}
+
 @media (max-width: 992px) {
   .leftDetails {
     width: inherit;
@@ -73,5 +116,16 @@ img{
   }
   .avg-cost{
     width: 50%;
+  }
+  .rating-cost{
+    justify-content: center;
+  }
+  .leftMenu{
+    width: inherit;
+  }
+  .rightCheckout {
+    width: 100%;
+    padding-right:5%;
+    padding-left: 5%;
   }
 }

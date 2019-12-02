@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import Header from '../../common/header/Header';
 import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Box from '@material-ui/core/Box';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import Badge from '@material-ui/core/Badge';
+
 import './Details.css';
-import Img from 'react-image'
+import { Button } from '@material-ui/core';
 
 class Details extends Component {
     constructor(props) {
@@ -54,40 +60,76 @@ class Details extends Component {
             <div>
                 <Header hideSearchBar={1} />
                 <div className="details">
-                <div className="flex-containerDetails">
+                    <div className="flex-containerDetails">
                     <div className="leftDetails">
-                        <Img src={restaurant.photo_URL}></Img>
+                        <img src={restaurant.photo_URL}></img>
                     </div>
 
                     <div className="rightDetails">
                         <div>
-                            <Typography variant="h5" gutterBottom>{restaurant.restaurant_name}</Typography>
+                            <Typography className="bold" variant="h4" gutterBottom>{restaurant.restaurant_name}</Typography>
                         </div>
                         <div className="locality">
-                            <Typography variant="subtitle1" gutterBottom>{restaurant.address.locality}</Typography>
+                            <Typography variant="h6" gutterBottom>{restaurant.address.locality}</Typography>
                         </div>
                         <div>
-                            <Typography className="bold" variant="subtitle2" gutterBottom>
+                            <Typography className="bold" variant="subtitle1" gutterBottom>
                                 {restaurant.categories.map(category => (
                                     <span key={category.id} >{category.category_name}, </span>
                                 ))}</Typography>
                         </div>
                         <div className="body2">
                             <div className="avg-customer-rating">
-                                <span>{restaurant.customer_rating}</span>
-                                <br></br>
-                                <Typography className="avg-customer-rating-text" variant="caption" gutterBottom>Average rating by< br></br> {restaurant.number_customers_rated} customers</Typography>
+                                <span className="rating-cost"><i className="fa fa-star" aria-hidden="true"></i> {restaurant.customer_rating}</span>
+                                <Typography className="avg-customer-rating-text" variant="caption" gutterBottom>Average rating by< br></br> <span className="bold">{restaurant.number_customers_rated}</span> customers</Typography>
                             </div>
                             <div className="avg-cost">
-                                <span>{restaurant.average_price}</span>
-                                <br></br>
-                                <Typography className="avg-cost-text" variant="caption" gutterBottom>Average cost for< br></br> 2 people</Typography>
+                                <span className="rating-cost"><i className="fa fa-inr" aria-hidden="true"></i> {restaurant.average_price}</span>
+                                <Typography className="avg-cost-text" variant="caption" gutterBottom>Average cost for< br></br>two people</Typography>
                             </div>
                         </div>
                     </div>
+                    </div>
 
+                    <div className="flex-container-menu">
+                        <div className="leftMenu">
+                        </div>
+                        <div className="rightCheckout">
+                            <Card>
+                                <CardContent>
+                                    <div className="chekoutHeader">
+                                        <Typography variant="h6" gutterBottom>
+                                            <Box display="flex">
+                                                <Box m={2}>
+                                                    <Badge badgeContent={0} color="primary">
+                                                        <ShoppingCartIcon />
+                                                    </Badge>
+                                                </Box>
+                                                <Box  m={2} fontWeight="fontWeightBold">
+                                                    My Cart
+                                                </Box>
+                                            </Box>
+                                        </Typography>
+                                    </div>
+                                    <div className="chekoutTotal">
+                                        <div className="amountText">
+                                            Total amount
+                                        </div>
+                                        <div className="amountInr" >
+                                            <i className="fa fa-inr" aria-hidden="true"></i>0.00
+                                        </div>
+                                    </div>
+                                    <div className="chekoutButton">
+                                        <Button variant="contained" color="primary" fullWidth>
+                                            Checkout
+                                        </Button>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                
             </div>
         )
     }

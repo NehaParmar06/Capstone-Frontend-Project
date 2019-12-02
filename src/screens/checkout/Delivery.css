@@ -1,0 +1,26 @@
+.tabs{
+    margin-bottom: 10px;
+    margin-left: 5px;
+    padding: 10px;
+    background-color: Navy;
+    color: white;
+}
+
+.tabcontainer{
+    margin-bottom: 10px;
+    margin-left: 5px;
+    padding: 10px;
+}
+
+.dispNone{
+    display: none;
+}
+
+.dispBlock{
+    display: block;
+    
+}
+
+.red{
+    color: red;
+}

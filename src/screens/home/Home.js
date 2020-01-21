@@ -41,9 +41,11 @@ class Home extends Component {
     getAllRestaurants(){
         this.retrieveRestaurantDetails().then(restaurantList => {
             console.log(restaurantList);
-            this.setState({
-                restaurantList: restaurantList.restaurants
-            });
+            if(restaurantList && restaurantList !== null && restaurantList !== undefined){
+                this.setState({
+                    restaurantList: restaurantList.restaurants
+                });
+            }
         });
 
         var res = this.state.restaurantList.filter(function(restaurant_name) {
